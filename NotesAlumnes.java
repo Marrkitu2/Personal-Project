@@ -1,9 +1,10 @@
+package EjerciciosRepaso;
 import java.util.Scanner;
 
 public class EjercicioArraysBidimensionals {
     public static void main(String[] args) {
-        String[] alumnes = new String[100]; // Cambia el tamaño según tus necesidades
-        int[][] notes = new int[100][100]; // Cambia el tamaño según tus necesidades
+        String[] alumnes = new String[100];
+        int[][] notes = new int[100][100];
 
         leerDatosEntrada(alumnes, notes);
         int numeroDeUFs = calcularNumeroDeUFs(alumnes, notes);
@@ -32,7 +33,7 @@ public class EjercicioArraysBidimensionals {
             numeroDeAlumnes++;
         }
     }
-
+    // Calculamos cuantas UF's habran, segun el numero de notas de los alumnos
     public static int calcularNumeroDeUFs(String[] alumnes, int[][] notes) {
         int numeroDeUFs = 0;
         for (int i = 0; i < alumnes.length; i++) {
@@ -46,17 +47,31 @@ public class EjercicioArraysBidimensionals {
     }
 
     public static void mostrarTablaNotas(String[] alumnes, int[][] notes, int numeroDeUFs) {
+        // Encontrar el máximo número de notas entre todos los alumnos
+        int maxNotas = 0;
+        for (int i = 0; i < alumnes.length; i++) {
+            int numNotasAlumno = 0;
+            for (int j = 0; j < notes[i].length; j++) {
+                if (notes[i][j] != 0) {
+                    numNotasAlumno++;
+                }
+            }
+            maxNotas = Math.max(maxNotas, numNotasAlumno);
+        }
+
         System.out.print("| notes/alumnes |");
-        for (int i = 1; i <= numeroDeUFs; i++) {
+        for (int i = 1; i <= maxNotas; i++) {
             System.out.printf(" UF%d |", i);
         }
         System.out.println();
-        // organizamos los datos de la tabla para que ocupen un espacio si o si
+        // Organizamos los datos de la tabla para que ocupen un espacio si o si
         for (int i = 0; i < alumnes.length; i++) {
             if (alumnes[i] != null) {
                 System.out.printf("| %-13s |", alumnes[i]);
-                for (int j = 0; j < notes[i].length; j++) {
-                    System.out.printf(" %3d |", notes[i][j]);
+                for (int j = 0; j < maxNotas; j++) {
+                    // Si el alumno tiene menos notas que el máximo, mostrar 0
+                    int nota = (j < notes[i].length) ? notes[i][j] : 0;
+                    System.out.printf(" %3d |", nota);
                 }
                 System.out.println();
             }
