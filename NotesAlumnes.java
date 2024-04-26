@@ -7,8 +7,7 @@ public class EjercicioArraysBidimensionals {
         int[][] notes = new int[100][100];
 
         leerDatosEntrada(alumnes, notes);
-        int numeroDeUFs = calcularNumeroDeUFs(alumnes, notes);
-        mostrarTablaNotas(alumnes, notes, numeroDeUFs);
+        mostrarTablaNotas(alumnes, notes);
     }
 
     public static void leerDatosEntrada(String[] alumnes, int[][] notes) {
@@ -17,12 +16,12 @@ public class EjercicioArraysBidimensionals {
 
         while (sc.hasNext()) {
             // leemos la entrada, si en la linea hay un 0, el programa se termina
-            String input = sc.nextLine();
-            if (input.equals("0")) {
+            String seguentEntrada = sc.nextLine();
+            if (seguentEntrada.equals("0")) {
                 break;
             }
             // dividimos la linea de entrada en partes utilizando un espacio como separador
-            String[] parts = input.split(" ");
+            String[] parts = seguentEntrada.split(" ");
             // agregamos la primera parte, al array de alumnos
             alumnes[numeroDeAlumnes] = parts[0];
 
@@ -33,20 +32,8 @@ public class EjercicioArraysBidimensionals {
             numeroDeAlumnes++;
         }
     }
-    // Calculamos cuantas UF's habran, segun el numero de notas de los alumnos
-    public static int calcularNumeroDeUFs(String[] alumnes, int[][] notes) {
-        int numeroDeUFs = 0;
-        for (int i = 0; i < alumnes.length; i++) {
-            for (int j = 0; j < notes[i].length; j++) {
-                if (notes[i][j] != 0) {
-                    numeroDeUFs++;
-                }
-            }
-        }
-        return numeroDeUFs;
-    }
 
-    public static void mostrarTablaNotas(String[] alumnes, int[][] notes, int numeroDeUFs) {
+    public static void mostrarTablaNotas(String[] alumnes, int[][] notes) {
         // Encontrar el máximo número de notas entre todos los alumnos
         int maxNotas = 0;
         for (int i = 0; i < alumnes.length; i++) {
@@ -63,17 +50,27 @@ public class EjercicioArraysBidimensionals {
         for (int i = 1; i <= maxNotas; i++) {
             System.out.printf(" UF%d |", i);
         }
-        System.out.println();
+        System.out.println(" Total |"); // Nueva cabecera para Total
+
         // Organizamos los datos de la tabla para que ocupen un espacio si o si
         for (int i = 0; i < alumnes.length; i++) {
             if (alumnes[i] != null) {
                 System.out.printf("| %-13s |", alumnes[i]);
+                int sumNotas = 0; // Variable para sumar las notas de las UF's
+                int numNotas = 0; // Variable para contar las UF's con notas
                 for (int j = 0; j < maxNotas; j++) {
-                    // Si el alumno tiene menos notas que el máximo, mostrar 0
+                    // Si el alumno tiene menos notas que el máximo, mostrar 0 y no sumar
                     int nota = (j < notes[i].length) ? notes[i][j] : 0;
+                    if (nota != 0) {
+                        sumNotas += nota; // Sumar las notas válidas
+                        numNotas++; // Contar las UF's con notas
+                    }
                     System.out.printf(" %3d |", nota);
                 }
-                System.out.println();
+                // Calcular el promedio y redondear según las condiciones
+                double promedio = (double) sumNotas / numNotas;
+                int total = (int) Math.round(promedio);
+                System.out.printf(" %5d |%n", total); // Imprimir el Total
             }
         }
     }
