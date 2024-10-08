@@ -1,0 +1,68 @@
+/* Marcos Lopez 
+   Alexis Boisset
+   Sumit Mahi*/
+   body {
+    background: black;
+    overflow: hidden; /* Evitar barras de desplazamiento */
+}
+
+.loader {
+    position: absolute; 
+    top: 50%; left: 50%; 
+    --from: 1px; /* Cambiado de 40px a 1px */
+    --to: 110vh; /* Cambiado de 400px a 100vh para que sea el máximo de la ventana */
+    --size: 2px; /* Cambiado de 15px a 2px */
+    --time: 1.5s; /* Cambiado de 7s a 1.5s */
+    --count: 190; /* Cambiado de 51 a 190 */
+    --turns: 35; /* Cambiado de 6 a 34 */
+}
+
+.circle {
+    position: absolute;
+    --delay: calc(var(--time) / var(--count) * -2 * var(--i));
+    rotate: calc(var(--turns) * 1turn / var(--count) * var(--i));
+    animation: circle var(--time) var(--delay) ease-in-out infinite;
+}
+
+.circle:nth-child(n + var(--count)) {
+    display: none;
+}
+
+.circle::before {
+    content: ''; 
+    display: block; 
+    width: var(--size); aspect-ratio: 1/1; 
+    border-radius: 50%; 
+    background-color: white; /* Color cambiado a blanco */
+    transform-origin: center center;
+    animation: circleSize var(--time) var(--delay) ease-in-out infinite;
+}
+
+/* Eliminar o comentar esta regla para evitar colores variados
+.rainbow .circle::before {
+    background-color: hsl(
+        calc(1turn /  ( var(--count) / var(--turns) ) * var(--i)) 
+        100% 70%
+    );
+}
+*/
+
+@keyframes circle {
+    from { transform: translate(0, var(--from)); }
+    to { transform: translate(0, var(--to)); }
+}
+
+@keyframes circleSize {
+    0%, 100% { transform: scale(1, 1); } /* Mantener el tamaño original */
+    50% { transform: scale(1.5, 0.5); } /* Estirar en el eje X y comprimir en el eje Y */
+}
+
+img {
+    position: absolute; /* Para que la imagen se posicione en relación al contenedor */
+    top: 0%; /* Alinea la imagen en la parte superior */
+    left: 0%; /* Alinea la imagen a la izquierda */
+    width: 100%; /* Ocupa el 100% del ancho de la ventana */
+    height: 100%; /* Ocupa el 100% de la altura de la ventana */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+    z-index: 1; /* Coloca la imagen encima de otros elementos */
+}
