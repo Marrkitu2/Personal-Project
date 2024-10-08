@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--
+
+    @Programith
+
+    //-->
+
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <img src="imagen3.png" alt="Imagen nave Espacial">
+        <div class="loader rainbow"></div>
+        <script type="text/javascript">
+            var loader = document.getElementsByClassName("loader")[0];
+            for (var i = 0; i < 100; i++) {
+                var b = document.createElement("div");
+                b.className = "circle";
+                b.style.setProperty("--i", i + 1);
+                loader.appendChild(b);
+            }
+        </script>
+    </body>
+</html>
